@@ -8,6 +8,16 @@ for item,score in dics.items():
 # 001,002,... 와 같은 형식으로 출력하기
 for i in range(1,101):
     print('대기번호:'+str(i).zfill(3))
+    
+# groupby 사용법    
+from random import *
+import pandas as pd
+L1=['남자','여자']
+D1=choices(L1,k=100)
+L2=[0,1]
+D2=choices(L2,k=100)
+df=pd.DataFrame(data={'성별':D1,'생사여부':D2})    
+df.groupby(['성별','생사여부'])['생사여부'].count()
 
 #pivot table 사용법
 users=pd.DataFrame(data=['mArk','JOHN','Tim','Jenny'],columns=['name'])
