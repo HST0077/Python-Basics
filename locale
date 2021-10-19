@@ -1,0 +1,5 @@
+import locale
+
+#float('1,000')은 에러 발생
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+locale.atoi('1,000')
