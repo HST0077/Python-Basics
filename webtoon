@@ -4,7 +4,7 @@ import lxml
 import re
 
 #구글에서 user agent string 검색해서 확인
-headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) # 접속에러가 생길 때
+headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}  # 접속에러가 생길 때
 
 url='https://comic.naver.com/webtoon/list?titleId=675554'
 res=requests.get(url)
