@@ -1,0 +1,8 @@
+# dictionary 출력하기
+dics={'수학':0,'영어':50,'코딩':100} 
+for item,score in dics.items():
+    # print(item,score) # 포맷없이
+    # print(item,':',score)
+    print(item.ljust(3),str(score).rjust(5),sep=':') #str.ljust(3)은 3칸을 확보하고 왼쪽에 맞춰서 출력
+
+
