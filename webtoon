@@ -1,0 +1,14 @@
+import requests
+from bs4 import BeautifulSoup
+import lxml
+import re
+
+url='https://comic.naver.com/webtoon/list?titleId=675554'
+res=requests.get(url)
+soup=BeautifulSoup(res.text,'lxml')
+carts=soup.find_all('a',string=re.compile('시즌4'))
+for cart in carts:
+    print(cart.get_text()) #text 내용를 추출해준다. 
+    link='https://comic.naver.com' + cart.get('href')
+    print(link)
+    
