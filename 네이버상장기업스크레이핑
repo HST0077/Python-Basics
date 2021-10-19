@@ -1,0 +1,28 @@
+import requests
+from bs4 import BeautifulSoup
+import lxml
+import pandas as pd
+import xlwings as xw
+
+list0=[]
+for page in range(1,6):
+    #브라우저 탐색창에서 아래 url 형식 카피
+    url='https://finance.naver.com/sise/sise_market_sum.nhn?sosok=0&page='+str(page)
+    res=requests.get(url)
+    res.raise_for_status() #접속시 문제가 발생하면 에러메시지 출력
+    soup=BeautifulSoup(res.text,'lxml')
+    list1=soup.find('tbody').find_all('tr',attrs={'onmouseover':'mouseOver(this)'})
+    for item in list1:
+        name=item.find('a').get_text() #a 태그에 붙어 있는 텍스트 출력
+        pr_br=item.find('td',attrs={'class':'number'})
+        pr=pr_br.get_text()
+        ms_br=pr_br.next_sibling.next_sibling.next_sibling.next_sibling
+        ms_br2=ms_br.next_sibling.next_sibling.next_sibling.next_sibling
+        ms=ms_br2.get_text()
+        list0.append([name,pr,ms])
+    
+out=pd.DataFrame(list0)
+with pd.ExcelWriter('C:/Temp/시가총액.xlsx') as ff:
+    out.to_excel(ff,sheet_name='시가총액')
+    #pr, ms는 텍스트 상태로 엑셀창으로 이동함
+    #엑셀 쉬트에서 쉽게 숫자로 변환가능
