@@ -8,3 +8,14 @@ for item,score in dics.items():
 # 001,002,... 와 같은 형식으로 출력하기
 for i in range(1,101):
     print('대기번호:'+str(i).zfill(3))
+
+#pivot table 사용법
+users=pd.DataFrame(data=['mArk','JOHN','Tim','Jenny'],columns=['name'])
+df=pd.DataFrame(data=[['Mark',55,'Italy',4.5,'Europe'],['JOHN',33,'USA',6.7,'America'],['Tim',41,'USA',3.9,'America'],['Jenny',12,'Germany',9.0,'Europe']],columns=['name','age','country','score','continent'],index=[1001,1000,1002,1003])
+data=[[15, "France", 4.1, "Becky"],[44, "Canada", 6.1, "Leanne"]]
+df.groupby(['continent']).agg(lambda x:x.max()-x.min()) #자동으로 숫자만 있는 컬럼만 계산하게 되지만, 곧 에러가 발생할 예정
+df.groupby(['continent'])['age','score'].agg(lambda x:x.max()-x.min()) 
+#FutureWarning: Indexing with multiple keys (implicitly converted to a tuple of keys) will be deprecated, use a list instead.
+def hst(x):
+    return x.max()-x.min()
+df.pivot_table(values=['age','score'],index='continent',aggfunc=hst) #aggfunc의 디폴트 값은 평균이라고 한다.
