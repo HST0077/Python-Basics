@@ -35,4 +35,15 @@ df = pd.DataFrame({'group': ['a', 'a', 'a', 'b', 'b', 'b'], 'value_1': np.arange
 df.pivot_table(values=['value_1','value_2'],index='group',aggfunc=max)
 df.pivot_table(values=['value_1','value_2'],index='group',aggfunc=min)
 df.groupby('group')['value_2'].describe()
+#행끼리 더하기
+dic={'r1':'R1','r2':'R1','r3':'R2','r4':'R2'}
+df.groupby(dic).sum()
+#열끼리 더하기
+dic={'c1':'R1','c2':'R1','c3':'R2','c4':'R2','c5':'R2'}
+df.groupby(dic,axis=1).sum()
+
+
+
+
+
 
