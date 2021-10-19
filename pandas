@@ -29,3 +29,10 @@ df.groupby(['continent'])['age','score'].agg(lambda x:x.max()-x.min())
 def hst(x):
     return x.max()-x.min()
 df.pivot_table(values=['age','score'],index='continent',aggfunc=hst) #aggfunc의 디폴트 값은 평균이라고 한다.
+
+#pivot table 사용법 2
+df = pd.DataFrame({'group': ['a', 'a', 'a', 'b', 'b', 'b'], 'value_1': np.arange(6),'value_2': np.random.randn(6)})
+df.pivot_table(values=['value_1','value_2'],index='group',aggfunc=max)
+df.pivot_table(values=['value_1','value_2'],index='group',aggfunc=min)
+df.groupby('group')['value_2'].describe()
+
