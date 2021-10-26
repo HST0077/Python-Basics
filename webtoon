@@ -7,7 +7,7 @@ import re
 headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}  # 접속에러가 생길 때
 
 url='https://comic.naver.com/webtoon/list?titleId=675554'
-res=requests.get(url)
+res=requests.get(url,headers=headers)
 res.raise_for_status() #연결 오류시 메시지 출력
 soup=BeautifulSoup(res.text,'lxml')
 carts=soup.find_all('a',string=re.compile('시즌4')) #a 태그중에서 '시즌4'라는 단어를 포함한 것들을 긁어온다. 
