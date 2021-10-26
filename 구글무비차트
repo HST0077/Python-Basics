@@ -1,0 +1,41 @@
+# 구글무비의 인기차트에서 할인가격으로 표시된 영화제목들만 출력하기
+from selenium import webdriver
+import time
+from bs4 import BeautifulSoup
+import lxml
+
+
+#chrome driver는 현재 pc에 맞는 것을 미리 다운받아야 한다. 
+browser = webdriver.Chrome('C:/PyData/chromedriver.exe') 
+url='https://play.google.com/store/movies/top/'
+browser.get(url) 
+browser.maximize_window() #창을 최대크기로
+
+# 화면스크롤하기
+browser.execute_script('window.scrollTo(0,document.body.scrollHeight)')
+# 현재 문서의 최대한 스크롤다운했을 때의 위치를 리턴시킴
+prev=browser.execute_script('return document.body.scrollHeight')
+# 화면을 스크롤 하면서 위 작업을 계속해 보자. 
+# 아래의 코드로 수행하면 같은 항목들이 중복되는 거 같음.
+while True:
+    time.sleep(2) #2초 동안 멈춤
+    browser.execute_script('window.scrollTo(0,document.body.scrollHeight)')
+    curr=browser.execute_script('return document.body.scrollHeight')
+    if curr==prev:
+        break
+    else:
+        prev=curr
+
+# 셀레니움으로 가져온 정보를 스프로 분석시킨다.
+soup=BeautifulSoup(browser.page_source,'lxml')
+movies=soup.find_all('div',attrs={'class':'Vpfmgd'})
+
+for movie in movies:
+    check=movie.find('span',attrs={'class':'SUZt4c djCuy'})
+    if check == None: #할인정보 클래스가 없으면 다음으로 진행
+        continue
+    else: #할인정보 클래스가 있으면 제목 출력
+        title=movie.find('div',attrs={'class':'WsMG1c nnK0zc'}).get_text()
+        print(title)
+
+    
