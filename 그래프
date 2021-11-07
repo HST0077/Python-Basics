@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+# 2차원 그래프 그리기
 fig=plt.figure() # figure: 종이에 해당
 ax1=fig.add_subplot(221) #그림 할당 행번호/열번호/그림번호
 ax2=fig.add_subplot(222)
@@ -13,5 +14,19 @@ x_=np.linspace(-5,5) #(-5,5) 구간을 50개의 점으로 쪼갬
 print(len(x_)) #x_ 의 크기 출력
 y_=2*x_-5
 ax2.plot(x_,y_)
+plt.show()
+
+
+# 3차원 그래프 그리기
+fig=plt.figure() # figure: 종이에 해당
+ax=plt.axes(projection='3d') #3차원 축 생성
+
+x_=np.linspace(-5,5) #(-5,5) 구간을 50개의 점으로 쪼갬
+y_=np.linspace(-5,5) #(-5,5) 구간을 50개의 점으로 쪼갬
+X,Y=np.meshgrid(x_,y_) # 50 by 50의 데이터쌍 생성
+
+Z=X**2+Y**2 #함수값 만들기
+#ax.contour3D(X,Y,Z,50,cmap='binary') #contour 
+ax.plot_surface(X,Y,Z) #surface
 plt.show()
 
