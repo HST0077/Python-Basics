@@ -30,3 +30,10 @@ Z=X**2+Y**2 #함수값 만들기
 ax.plot_surface(X,Y,Z) #surface
 plt.show()
 
+# 한글이 안깨지도록 하려면
+import matplotlib.font_manager as fm
+import matplotlib
+
+font_location='C:/Windows/Fonts/HYCYSM.TTF' #시스템에 있는 폰트위치
+font_name=fm.FontProperties(fname=font_location).get_name() #폰트의 이름정보가져오기
+matplotlib.rc('font',family=font_name) #폰트이름을 matplotlib에 설정
