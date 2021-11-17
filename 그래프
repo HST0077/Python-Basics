@@ -37,3 +37,83 @@ import matplotlib
 font_location='C:/Windows/Fonts/HYCYSM.TTF' #시스템에 있는 폰트위치
 font_name=fm.FontProperties(fname=font_location).get_name() #폰트의 이름정보가져오기
 matplotlib.rc('font',family=font_name) #폰트이름을 matplotlib에 설정
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 두 영업사원의 월간 실적 만들기
+A1=np.ceil(np.random.rand(12)*100)
+A2=np.ceil(np.random.rand(12)*100)
+date=np.arange(1,13)
+
+# 그래프 그리기
+plt.style.use('ggplot')
+fig=plt.figure()
+ax=fig.add_subplot(111)
+ax.plot(date,A1,label='A1')
+ax.plot(date,A2,label='A2')
+
+ax.set_xlabel('월별')
+ax.set_ylabel('실적')
+
+ax.legend()
+plt.show()
+
+
+# 막대그래프 그리기
+# 가로축에는 A1, .. A5까지의 이름이, 세로축에는 2011,...,2021까지의 연도
+# 숫자는 0부터 100사이의 랜덤 정수
+data=np.ceil(np.random.rand(11,5)*100) #정수로 올림
+cols=[f'A{i}' for i in range(1,6)]
+idx=[n for n in range(2011,2022)]
+df=pd.DataFrame(data=data,index=idx,columns=cols)
+df.columns.name='질병코드'
+df.index.name='Year'
+
+fig=plt.figure()
+ax=fig.add_subplot(211)
+
+# 각 년도별로 하나의 막대에 5개의 자료가 보이게 된다. 
+for i in df.columns:
+    ax.bar(df.index,df[i],label=i)
+ax.legend()
+
+# 각 년도별로 5개의 막대그래프를 그리게 된다. 
+ax2=fig.add_subplot(212)
+wt=np.array(range(len(df)))
+w=0.1 #막대기 사이즈
+for i in df.columns:
+    ax2.bar(wt,df[i],width=w,label=i)
+    wt=wt+w
+    
+# 구글링 결과 여러개의 그래프 눈금이 들어가는 경우
+# x-ticks를 먼저 설정해서 위치를 할당하고, 그리고 x-label을 붙여야 한다고 한다.(y는 값이 하나라서 ylabel 만함)
+# 왜냐하면 막대 당 하나의 눈금이 붙는 게 기본 값이 아니기 때문이다. 
+# https://blog.naver.com/cksdid04/222397761459
+
+ax2.set_xticks(np.array(range(len(df))))
+ax2.set_xticklabels(df.index)
+ax2.legend()
+
+plt.show()
+
+
+
+# 막대차트, 라인차트를 동시에 그리기 (14분22초)
+# 자료 생성
+idx=pd.date_range('2021-1-1',periods=100,freq='D') #일간 100개의 날짜 생성
+prices=np.ceil(np.random.rand(100)*100)
+volume=np.ceil(np.random.rand(100)*20000)
+df=pd.DataFrame(data={'날짜':idx,'주가':prices,'거래량':volume})
+
+# 그래프 그리기
+
+fig=plt.figure()
+ax=fig.add_subplot(111)
+ax.bar(idx,volume,label='거래량')
+ax2=ax.twinx() # 1개의 x축에 2개의 y축을 가지도록 하기 위해서
+ax2.plot(idx,prices,'b*',label='주가',) 
+ax1.legend()
+ax2.legend()
+plt.show()
+
